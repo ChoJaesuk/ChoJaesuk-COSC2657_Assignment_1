@@ -1,6 +1,7 @@
 package com.example.darwyourmind.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -57,11 +60,25 @@ public class TestActivity extends AppCompatActivity {
         // Submit button to move to QuestionActivity
         submitButton.setOnClickListener(view -> {
             Log.d("TestActivity", "Submit button clicked");
-            Log.d("TestActivity", "questions: " + questions);
+            String drawingPath = saveDrawingToFile();  // Save drawing and get the file path
             Intent questionIntent = new Intent(TestActivity.this, QuestionActivity.class);
             questionIntent.putStringArrayListExtra("questions", questions);
+            questionIntent.putExtra("drawingPath", drawingPath);  // Pass the drawing file path
             startActivity(questionIntent);
         });
+    }
+
+    // Method to save the drawing to a file
+    private String saveDrawingToFile() {
+        File drawingFile = new File(getCacheDir(), "drawing.png");
+        try (FileOutputStream out = new FileOutputStream(drawingFile)) {
+            Bitmap bitmap = drawingView.getBitmap();  // Assuming DrawingView has a method to get the bitmap
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            return drawingFile.getAbsolutePath();
+        } catch (Exception e) {
+            Log.e("TestActivity", "Error saving drawing", e);
+            return null;
+        }
     }
 
     private String loadQuestionsFromJson(String categoryName) {
