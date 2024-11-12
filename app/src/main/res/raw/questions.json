@@ -1,0 +1,22 @@
+{
+  "categories": [
+    {
+      "name": "Psychology Test",
+      "drawing_prompt": "Draw a house.",
+      "questions": [
+        "Does the house you drew have a fence?",
+        "Does it have a chimney?",
+        "Did you draw any people?"
+      ]
+    },
+    {
+      "name": "Stress Measurement",
+      "drawing_prompt": "Draw a tree.",
+      "questions": [
+        "Does the tree have a lot of leaves?",
+        "Did you draw any other plants beside the tree?",
+        "Is the tree connected to the ground?"
+      ]
+    }
+  ]
+}
