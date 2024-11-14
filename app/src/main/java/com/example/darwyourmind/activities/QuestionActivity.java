@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -59,15 +60,25 @@ public class QuestionActivity extends AppCompatActivity {
         loadQuestionsFromJson("Psychology Test");
         displayQuestion(currentQuestionIndex);
 
+        // Initially disable the submit button
+        submitButton.setEnabled(false);
+
+        // Enable submit button only when an option is selected
+        optionsGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            submitButton.setEnabled(checkedId != -1); // Enable if an option is selected
+        });
+
         submitButton.setOnClickListener(v -> {
             int selectedId = optionsGroup.getCheckedRadioButtonId();
             if (selectedId != -1) {
                 RadioButton selectedOption = findViewById(selectedId);
                 String answer = selectedOption.getText().toString();
                 showExplanation(answer);
+            } else {
+                // Show a message if no option is selected
+                Toast.makeText(QuestionActivity.this, "Please select an option.", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         nextButton.setOnClickListener(v -> {
             currentQuestionIndex++;
@@ -149,6 +160,7 @@ public class QuestionActivity extends AppCompatActivity {
         explanationTextView.setText("");
         explanationTextView.setVisibility(View.GONE);
         submitButton.setVisibility(View.VISIBLE);
+        submitButton.setEnabled(false); // Disable until an option is selected
         nextButton.setVisibility(View.GONE);
     }
 
