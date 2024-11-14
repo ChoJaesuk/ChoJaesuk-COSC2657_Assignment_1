@@ -1,6 +1,7 @@
 package com.example.darwyourmind.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -59,5 +60,14 @@ public class DrawingView extends View {
         path.reset();
         invalidate(); // 화면 갱신
     }
+
+    // Method to create a bitmap from the DrawingView content
+    public Bitmap getBitmap() {
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        draw(canvas); // Draw the view’s content onto the canvas
+        return bitmap;
+    }
+
 }
 

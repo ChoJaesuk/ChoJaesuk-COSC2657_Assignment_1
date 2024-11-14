@@ -4,19 +4,122 @@
       "name": "Psychology Test",
       "drawing_prompt": "Draw a house.",
       "questions": [
-        "Does the house you drew have a fence?",
-        "Does it have a chimney?",
-        "Did you draw any people?"
+        {
+          "question": "Does the house you drew have a fence?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "A fence usually signifies a protective psychological barrier and a focus on social boundaries. You may value boundaries with others and have a defensive inner disposition.",
+            "No": "Not having a fence may indicate openness and a comfort with fewer psychological barriers, suggesting a more approachable and open attitude."
+          }
+        },
+        {
+          "question": "Does it have a chimney?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "A chimney often represents warmth and a connection to family values. You may place importance on family connections and inner warmth.",
+            "No": "The lack of a chimney could signify independence from traditional family structures or a more detached attitude."
+          }
+        },
+        {
+          "question": "Did you draw any windows?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "Windows suggest openness and a desire for connection. You might be comfortable with allowing others to understand your inner thoughts.",
+            "No": "A lack of windows could imply a preference for privacy and a reluctance to expose your inner world to others."
+          }
+        }
       ]
     },
     {
-      "name": "Stress Measurement",
+      "name": "Stress Level Assessment",
       "drawing_prompt": "Draw a tree.",
       "questions": [
-        "Does the tree have a lot of leaves?",
-        "Did you draw any other plants beside the tree?",
-        "Is the tree connected to the ground?"
+        {
+          "question": "Does the tree have many leaves?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "A tree full of leaves can indicate vitality and positive energy. You might be resilient and capable of handling stress well.",
+            "No": "A lack of leaves may suggest feeling drained or stressed, potentially indicating a need for relaxation and self-care."
+          }
+        },
+        {
+          "question": "Did you draw roots?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "Roots represent stability and connection to your values. You may feel grounded and secure in your life.",
+            "No": "A lack of roots could signify feelings of instability or being ungrounded, suggesting you may feel disconnected or uncertain."
+          }
+        },
+        {
+          "question": "Is there any fruit on the tree?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "Fruits are symbols of productivity and accomplishment. You may feel successful and fulfilled in your pursuits.",
+            "No": "The absence of fruit could indicate a sense of unfulfillment or a desire to achieve more in your life."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Interpersonal Relationship Analysis",
+      "drawing_prompt": "Draw a person.",
+      "questions": [
+        {
+          "question": "Is the person smiling?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "A smiling person can indicate positivity and an approachable personality. You might be optimistic and open to social interactions.",
+            "No": "A lack of a smile could signify reservation or a more serious disposition, possibly indicating hesitancy in forming new relationships."
+          }
+        },
+        {
+          "question": "Did you draw any other people around them?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "This suggests a strong focus on social connections and the importance of companionship in your life.",
+            "No": "Drawing only one person may indicate a preference for solitude or a more independent nature."
+          }
+        },
+        {
+          "question": "Did you include any background or environment?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "Including a background can imply a strong awareness of context and surroundings. You may value a structured and familiar environment.",
+            "No": "A lack of background might suggest a focus on the self and personal identity over external factors."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Future Goals and Aspirations",
+      "drawing_prompt": "Draw a ladder.",
+      "questions": [
+        {
+          "question": "Is the ladder tall?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "A tall ladder suggests high aspirations and a strong drive toward achieving big goals.",
+            "No": "A shorter ladder may indicate modest ambitions and a focus on achievable goals rather than lofty aspirations."
+          }
+        },
+        {
+          "question": "Does the ladder lean on something?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "Leaning the ladder suggests reliance on support or guidance, indicating you may prefer structured pathways toward your goals.",
+            "No": "An independent ladder reflects self-sufficiency and confidence, suggesting you rely more on your inner strength to reach your aspirations."
+          }
+        },
+        {
+          "question": "Did you draw any obstacles near the ladder?",
+          "options": ["Yes", "No"],
+          "explanation": {
+            "Yes": "Obstacles might suggest a recognition of challenges ahead. You are aware of potential setbacks and may be cautious in your pursuits.",
+            "No": "A lack of obstacles may indicate optimism or confidence in your path to achieving goals without much hindrance."
+          }
+        }
       ]
     }
   ]
 }
+
