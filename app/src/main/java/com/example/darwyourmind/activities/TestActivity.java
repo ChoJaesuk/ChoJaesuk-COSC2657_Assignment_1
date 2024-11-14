@@ -34,7 +34,7 @@ public class TestActivity extends AppCompatActivity {
     private TextView testTitle;
     private TextView drawingPromptTextView;
     private DrawingView drawingView;
-    private Button clearButton, submitButton, blackButton , redButton, blueButton, greenButton, eraserButton;
+    private Button clearButton, submitButton, eraserButton;
     private ArrayList<String> questions;
 
     @Override
@@ -42,40 +42,37 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        // Initialize view components
         testTitle = findViewById(R.id.testTitle);
         drawingPromptTextView = findViewById(R.id.drawingPromptTextView);
         drawingView = findViewById(R.id.drawingView);
         clearButton = findViewById(R.id.clearButton);
         submitButton = findViewById(R.id.submitButton);
-//        blackButton = findViewById(R.id.blackButton);
-//        redButton = findViewById(R.id.redButton);
-//        blueButton = findViewById(R.id.blueButton);
-//        greenButton = findViewById(R.id.greenButton);
         eraserButton = findViewById(R.id.eraserButton);
 
         Spinner colorSpinner = findViewById(R.id.colorSpinner);
 
-// 색상 이름과 값 설정
+        // Set color names and values
         List<String> colorNames = Arrays.asList("Black", "Red", "Blue", "Green");
         int[] colorValues = {Color.BLACK, Color.RED, Color.BLUE, Color.GREEN};
 
-// 어댑터 설정
+        // Set up color spinner adapter
         ColorSpinnerAdapter adapter = new ColorSpinnerAdapter(this, colorNames, colorValues);
         colorSpinner.setAdapter(adapter);
 
-// 색상 선택 이벤트 리스너 설정
+        // Color selection event listener for spinner
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                drawingView.setColor(colorValues[position]);
+                drawingView.setColor(colorValues[position]); // Set selected color
+                drawingView.invalidate();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // 기본값 유지
+                // Default behavior
             }
         });
-
 
         // Get category information from intent
         Intent intent = getIntent();
@@ -92,13 +89,7 @@ public class TestActivity extends AppCompatActivity {
         // Clear button functionality
         clearButton.setOnClickListener(view -> drawingView.clearDrawing());
 
-//        // Color change buttons
-//        blackButton.setOnClickListener(v -> drawingView.setColor(Color.BLACK));
-//        redButton.setOnClickListener(v -> drawingView.setColor(Color.RED));
-//        blueButton.setOnClickListener(v -> drawingView.setColor(Color.BLUE));
-//        greenButton.setOnClickListener(v -> drawingView.setColor(Color.GREEN));
-
-        // Eraser button
+        // Eraser button functionality
         eraserButton.setOnClickListener(v -> drawingView.enableEraser());
 
         // Submit button to move to QuestionActivity
