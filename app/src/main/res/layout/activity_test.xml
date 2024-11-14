@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/buttonGroupLayout" />
 
-    <!-- Button Group Layout -->
+    <!-- Color Selection Spinner and Eraser Button Layout -->
     <LinearLayout
         android:id="@+id/buttonGroupLayout"
         android:layout_width="match_parent"
@@ -46,39 +46,24 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/submitButton"
         android:gravity="center"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginBottom="8dp">
 
-        <Button
-            android:id="@+id/redButton"
+        <!-- Color Selection Spinner -->
+        <Spinner
+            android:id="@+id/colorSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:text="Red" />
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center"
+            android:spinnerMode="dropdown"/>
 
-        <Button
-            android:id="@+id/blueButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_blue_dark"
-            android:text="Blue"
-            android:layout_marginStart="8dp" />
-
-        <Button
-            android:id="@+id/greenButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_green_dark"
-            android:text="Green"
-            android:layout_marginStart="8dp" />
-
+        <!-- Eraser Button -->
         <Button
             android:id="@+id/eraserButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/darker_gray"
-            android:text="Eraser"
-            android:layout_marginStart="8dp" />
+            android:text="Eraser" />
     </LinearLayout>
 
     <!-- Submit and Clear Buttons -->
@@ -104,5 +89,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
