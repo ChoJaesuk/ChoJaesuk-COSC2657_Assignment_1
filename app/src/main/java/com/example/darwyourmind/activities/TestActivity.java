@@ -5,12 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.darwyourmind.R;
+import com.example.darwyourmind.adapters.ColorSpinnerAdapter;
 import com.example.darwyourmind.views.DrawingView;
 
 import org.json.JSONArray;
@@ -22,13 +26,15 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
     private TextView testTitle;
     private TextView drawingPromptTextView;
     private DrawingView drawingView;
-    private Button clearButton, submitButton, redButton, blueButton, greenButton, eraserButton;
+    private Button clearButton, submitButton, blackButton , redButton, blueButton, greenButton, eraserButton;
     private ArrayList<String> questions;
 
     @Override
@@ -41,10 +47,35 @@ public class TestActivity extends AppCompatActivity {
         drawingView = findViewById(R.id.drawingView);
         clearButton = findViewById(R.id.clearButton);
         submitButton = findViewById(R.id.submitButton);
-        redButton = findViewById(R.id.redButton);
-        blueButton = findViewById(R.id.blueButton);
-        greenButton = findViewById(R.id.greenButton);
+//        blackButton = findViewById(R.id.blackButton);
+//        redButton = findViewById(R.id.redButton);
+//        blueButton = findViewById(R.id.blueButton);
+//        greenButton = findViewById(R.id.greenButton);
         eraserButton = findViewById(R.id.eraserButton);
+
+        Spinner colorSpinner = findViewById(R.id.colorSpinner);
+
+// 색상 이름과 값 설정
+        List<String> colorNames = Arrays.asList("Black", "Red", "Blue", "Green");
+        int[] colorValues = {Color.BLACK, Color.RED, Color.BLUE, Color.GREEN};
+
+// 어댑터 설정
+        ColorSpinnerAdapter adapter = new ColorSpinnerAdapter(this, colorNames, colorValues);
+        colorSpinner.setAdapter(adapter);
+
+// 색상 선택 이벤트 리스너 설정
+        colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                drawingView.setColor(colorValues[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 기본값 유지
+            }
+        });
+
 
         // Get category information from intent
         Intent intent = getIntent();
@@ -61,10 +92,11 @@ public class TestActivity extends AppCompatActivity {
         // Clear button functionality
         clearButton.setOnClickListener(view -> drawingView.clearDrawing());
 
-        // Color change buttons
-        redButton.setOnClickListener(v -> drawingView.setColor(Color.RED));
-        blueButton.setOnClickListener(v -> drawingView.setColor(Color.BLUE));
-        greenButton.setOnClickListener(v -> drawingView.setColor(Color.GREEN));
+//        // Color change buttons
+//        blackButton.setOnClickListener(v -> drawingView.setColor(Color.BLACK));
+//        redButton.setOnClickListener(v -> drawingView.setColor(Color.RED));
+//        blueButton.setOnClickListener(v -> drawingView.setColor(Color.BLUE));
+//        greenButton.setOnClickListener(v -> drawingView.setColor(Color.GREEN));
 
         // Eraser button
         eraserButton.setOnClickListener(v -> drawingView.enableEraser());
