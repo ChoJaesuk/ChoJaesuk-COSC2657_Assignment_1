@@ -2,6 +2,7 @@ package com.example.darwyourmind.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -27,8 +28,7 @@ public class TestActivity extends AppCompatActivity {
     private TextView testTitle;
     private TextView drawingPromptTextView;
     private DrawingView drawingView;
-    private Button clearButton;
-    private Button submitButton;
+    private Button clearButton, submitButton, redButton, blueButton, greenButton, eraserButton;
     private ArrayList<String> questions;
 
     @Override
@@ -41,6 +41,10 @@ public class TestActivity extends AppCompatActivity {
         drawingView = findViewById(R.id.drawingView);
         clearButton = findViewById(R.id.clearButton);
         submitButton = findViewById(R.id.submitButton);
+        redButton = findViewById(R.id.redButton);
+        blueButton = findViewById(R.id.blueButton);
+        greenButton = findViewById(R.id.greenButton);
+        eraserButton = findViewById(R.id.eraserButton);
 
         // Get category information from intent
         Intent intent = getIntent();
@@ -56,6 +60,14 @@ public class TestActivity extends AppCompatActivity {
 
         // Clear button functionality
         clearButton.setOnClickListener(view -> drawingView.clearDrawing());
+
+        // Color change buttons
+        redButton.setOnClickListener(v -> drawingView.setColor(Color.RED));
+        blueButton.setOnClickListener(v -> drawingView.setColor(Color.BLUE));
+        greenButton.setOnClickListener(v -> drawingView.setColor(Color.GREEN));
+
+        // Eraser button
+        eraserButton.setOnClickListener(v -> drawingView.enableEraser());
 
         // Submit button to move to QuestionActivity
         submitButton.setOnClickListener(view -> {
