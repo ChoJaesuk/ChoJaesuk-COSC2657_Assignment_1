@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -92,15 +93,25 @@ public class TestActivity extends AppCompatActivity {
         // Eraser button functionality
         eraserButton.setOnClickListener(v -> drawingView.enableEraser());
 
-        // Submit button to move to QuestionActivity
         submitButton.setOnClickListener(view -> {
             Log.d("TestActivity", "Submit button clicked");
-            String drawingPath = saveDrawingToFile();  // Save drawing and get the file path
+
+            // 저장된 그림 파일 경로
+            String drawingPath = saveDrawingToFile();
+
+            if (category == null || category.isEmpty()) {
+                Toast.makeText(TestActivity.this, "No category selected", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // QuestionActivity로 전달
             Intent questionIntent = new Intent(TestActivity.this, QuestionActivity.class);
             questionIntent.putStringArrayListExtra("questions", questions);
-            questionIntent.putExtra("drawingPath", drawingPath);  // Pass the drawing file path
+            questionIntent.putExtra("drawingPath", drawingPath);  // 그림 파일 경로 전달
+            questionIntent.putExtra("category", category);  // 카테고리 전달
             startActivity(questionIntent);
         });
+
     }
 
     // Method to save the drawing to a file

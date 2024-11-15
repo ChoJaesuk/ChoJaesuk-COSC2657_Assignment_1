@@ -30,12 +30,13 @@ import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    private TextView questionTextView, explanationTextView;
+    private TextView questionTextView;
     private ImageView drawingImageView;
     private RadioGroup optionsGroup;
-    private Button submitButton, nextButton;
+    private Button submitButton;
 
     private ArrayList<Question> questionsList;
+    private ArrayList<String[]> resultList; // Store question, answer, and explanation
     private int currentQuestionIndex = 0;
 
     @Override
@@ -44,11 +45,11 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
 
         questionTextView = findViewById(R.id.questionTitle);
-        explanationTextView = findViewById(R.id.explanationTextView);
         drawingImageView = findViewById(R.id.drawingImageView);
         optionsGroup = findViewById(R.id.optionsGroup);
         submitButton = findViewById(R.id.submitButton);
-        nextButton = findViewById(R.id.nextButton);
+
+        resultList = new ArrayList<>(); // Initialize result list
 
         // Load the drawing image
         String drawingPath = getIntent().getStringExtra("drawingPath");
@@ -57,7 +58,19 @@ public class QuestionActivity extends AppCompatActivity {
             drawingImageView.setImageBitmap(bitmap);
         }
 
-        loadQuestionsFromJson("Psychology Test");
+        String selectedCategory = getIntent().getStringExtra("category");
+        if (selectedCategory == null || selectedCategory.isEmpty()) {
+            Toast.makeText(this, "No category selected", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+// 선택된 카테고리를 기반으로 질문 로드
+        loadQuestionsFromJson(selectedCategory);
+
+
+        // Load questions based on the selected category
+        loadQuestionsFromJson(selectedCategory);
         displayQuestion(currentQuestionIndex);
 
         // Initially disable the submit button
@@ -65,7 +78,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         // Enable submit button only when an option is selected
         optionsGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            submitButton.setEnabled(checkedId != -1); // Enable if an option is selected
+            submitButton.setEnabled(checkedId != -1);
         });
 
         submitButton.setOnClickListener(v -> {
@@ -73,22 +86,21 @@ public class QuestionActivity extends AppCompatActivity {
             if (selectedId != -1) {
                 RadioButton selectedOption = findViewById(selectedId);
                 String answer = selectedOption.getText().toString();
-                showExplanation(answer);
-            } else {
-                // Show a message if no option is selected
-                Toast.makeText(QuestionActivity.this, "Please select an option.", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        nextButton.setOnClickListener(v -> {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questionsList.size()) {
-                displayQuestion(currentQuestionIndex);
+                // Save the question, selected answer, and explanation
+                Question currentQuestion = questionsList.get(currentQuestionIndex);
+                String explanation = currentQuestion.getExplanation(answer);
+                resultList.add(new String[]{currentQuestion.getQuestionText(), answer, explanation});
+
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questionsList.size()) {
+                    displayQuestion(currentQuestionIndex); // Display the next question
+                } else {
+                    // Navigate to ResultActivity after the last question
+                    navigateToResultActivity();
+                }
             } else {
-                // Go back to HomeActivity after all questions
-                Intent homeIntent = new Intent(QuestionActivity.this, HomeActivity.class);
-                startActivity(homeIntent);
-                finish();
+                Toast.makeText(QuestionActivity.this, "Please select an option.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -157,19 +169,20 @@ public class QuestionActivity extends AppCompatActivity {
             optionsGroup.addView(radioButton);
         }
 
-        explanationTextView.setText("");
-        explanationTextView.setVisibility(View.GONE);
-        submitButton.setVisibility(View.VISIBLE);
         submitButton.setEnabled(false); // Disable until an option is selected
-        nextButton.setVisibility(View.GONE);
     }
 
-    private void showExplanation(String answer) {
-        Question currentQuestion = questionsList.get(currentQuestionIndex);
-        String explanation = currentQuestion.getExplanation(answer);
-        explanationTextView.setText(explanation);
-        explanationTextView.setVisibility(View.VISIBLE);
-        submitButton.setVisibility(View.GONE);
-        nextButton.setVisibility(View.VISIBLE);
+    private void navigateToResultActivity() {
+        Intent resultIntent = new Intent(QuestionActivity.this, ResultActivity.class);
+        resultIntent.putExtra("resultList", resultList); // Pass result list to ResultActivity
+
+        // Pass the drawing path to ResultActivity
+        String drawingPath = getIntent().getStringExtra("drawingPath");
+        if (drawingPath != null) {
+            resultIntent.putExtra("drawingPath", drawingPath); // Include the drawing path
+        }
+
+        startActivity(resultIntent);
+        finish();
     }
 }
