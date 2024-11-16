@@ -56,20 +56,25 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 holder.drawingImageView.setImageResource(R.drawable.ic_placeholder); // Default image
             }
 
-            // Show questions and answers
+            // Show questions, answers, and explanations
             JSONArray resultsArray = testResult.getJSONArray("results");
             StringBuilder resultsBuilder = new StringBuilder();
             for (int i = 0; i < resultsArray.length(); i++) {
                 JSONObject result = resultsArray.getJSONObject(i);
                 String question = result.getString("question");
                 String answer = result.getString("answer");
-                resultsBuilder.append("Q: ").append(question).append("\nA: ").append(answer).append("\n\n");
+                String explanation = result.getString("explanation");
+                resultsBuilder.append("Q: ").append(question)
+                        .append("\nA: ").append(answer)
+                        .append("\nExplanation: ").append(explanation)
+                        .append("\n\n");
             }
             holder.detailsTextView.setText(resultsBuilder.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 
     @Override

@@ -1,43 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/card_background"
     android:elevation="4dp"
-    android:padding="8dp"
-    android:background="#FFFFFF">
+    android:layout_marginBottom="12dp">
 
-    <LinearLayout
+    <!-- Test Title -->
+    <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="12dp"
+        android:text="Test Title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_text"
+        android:fontFamily="sans-serif" />
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Test Title"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+    <!-- Drawing Thumbnail -->
+    <ImageView
+        android:id="@+id/drawingImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Drawing Image"
+        android:background="@drawable/rounded_image_background" />
 
-        <!-- Drawing Preview -->
-        <ImageView
-            android:id="@+id/drawingImageView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="8dp" />
 
-        <!-- Test Details -->
-        <TextView
-            android:id="@+id/detailsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Details"
-            android:textSize="14sp"
-            android:lineSpacingExtra="4dp" />
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    <!-- Details (Question and Answer) -->
+    <TextView
+        android:id="@+id/detailsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Details"
+        android:textSize="16sp"
+        android:textColor="@color/secondary_text"
+        android:lineSpacingExtra="6dp" />
+</LinearLayout>
