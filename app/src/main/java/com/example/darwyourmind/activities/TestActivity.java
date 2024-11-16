@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.darwyourmind.R;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends BaseActivity  {
 
     private TextView testTitle;
     private TextView drawingPromptTextView;
@@ -42,6 +44,13 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        setTitle("Drawing");
+
+        // 액션바에 뒤로가기 버튼 활성화
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Initialize view components
         testTitle = findViewById(R.id.testTitle);
@@ -94,24 +103,67 @@ public class TestActivity extends AppCompatActivity {
         eraserButton.setOnClickListener(v -> drawingView.enableEraser());
 
         submitButton.setOnClickListener(view -> {
-            Log.d("TestActivity", "Submit button clicked");
+            // 확인 팝업 표시
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Submit Drawing?");
+            builder.setMessage("정말 그림을 제출하고 싶으신가요? 그림은 다시 수정할 수 없습니다.");
 
-            // 저장된 그림 파일 경로
-            String drawingPath = saveDrawingToFile();
+            builder.setPositiveButton("Yes", (dialog, which) -> {
+                Log.d("TestActivity", "Submit button clicked");
 
-            if (category == null || category.isEmpty()) {
-                Toast.makeText(TestActivity.this, "No category selected", Toast.LENGTH_SHORT).show();
-                return;
-            }
+                // 저장된 그림 파일 경로
+                String drawingPath = saveDrawingToFile();
 
-            // QuestionActivity로 전달
-            Intent questionIntent = new Intent(TestActivity.this, QuestionActivity.class);
-            questionIntent.putStringArrayListExtra("questions", questions);
-            questionIntent.putExtra("drawingPath", drawingPath);  // 그림 파일 경로 전달
-            questionIntent.putExtra("category", category);  // 카테고리 전달
-            startActivity(questionIntent);
+                if (category == null || category.isEmpty()) {
+                    Toast.makeText(TestActivity.this, "No category selected", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // `testTitle`에서 텍스트 가져오기
+                String testTitleText = testTitle.getText().toString();
+
+                // QuestionActivity로 전달
+                Intent questionIntent = new Intent(TestActivity.this, QuestionActivity.class);
+                questionIntent.putStringArrayListExtra("questions", questions);
+                questionIntent.putExtra("drawingPath", drawingPath);  // 그림 파일 경로 전달
+                questionIntent.putExtra("category", category);  // 카테고리 전달
+                questionIntent.putExtra("testTitle", testTitleText); // 테스트 타이틀 전달
+                startActivity(questionIntent);
+            });
+
+            builder.setNegativeButton("No", (dialog, which) -> {
+                dialog.dismiss(); // 팝업창 닫기
+            });
+
+            builder.create().show(); // 팝업창 표시
         });
 
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) { // 뒤로가기 버튼 클릭
+            showExitConfirmationDialog(); // 팝업창 표시
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit Drawing?");
+        builder.setMessage("테스트를 종료하시겠습니까? 그림은 저장되지 않습니다.");
+
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            finish(); // Activity 종료
+        });
+
+        builder.setNegativeButton("No", (dialog, which) -> {
+            dialog.dismiss(); // 팝업창 닫기
+        });
+
+        builder.create().show(); // 팝업창 표시
     }
 
     // Method to save the drawing to a file

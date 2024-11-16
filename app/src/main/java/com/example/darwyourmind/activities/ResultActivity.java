@@ -17,7 +17,7 @@ import com.example.darwyourmind.R;
 import java.io.File;
 import java.util.ArrayList;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends BaseActivity  {
 
     private ImageView drawingImageView;
     private LinearLayout resultContainer;
@@ -29,6 +29,9 @@ public class ResultActivity extends AppCompatActivity {
 
         drawingImageView = findViewById(R.id.drawingImageView);
         resultContainer = findViewById(R.id.resultContainer);
+
+        // Set title for the ActionBar
+        setTitle("Result");
 
         // Load the drawing image
         String drawingPath = getIntent().getStringExtra("drawingPath");

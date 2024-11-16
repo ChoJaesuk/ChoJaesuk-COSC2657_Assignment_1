@@ -5,7 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.darwyourmind.R;
@@ -28,7 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class QuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends BaseActivity {
 
     private TextView questionTextView;
     private ImageView drawingImageView;
@@ -44,10 +46,28 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        // Set title for the ActionBar
+        setTitle("Questions");
+
+        // Enable ActionBar's back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         questionTextView = findViewById(R.id.questionTitle);
         drawingImageView = findViewById(R.id.drawingImageView);
         optionsGroup = findViewById(R.id.optionsGroup);
         submitButton = findViewById(R.id.submitButton);
+        TextView questionTitleTextView = findViewById(R.id.questionTitleTextView);
+
+        // Intent에서 테스트 타이틀 가져오기
+        Intent intent = getIntent();
+        String testTitle = intent.getStringExtra("testTitle");
+
+        // 테스트 타이틀 표시
+        if (testTitle != null) {
+            questionTitleTextView.setText(testTitle);
+        }
 
         resultList = new ArrayList<>(); // Initialize result list
 
@@ -65,11 +85,7 @@ public class QuestionActivity extends AppCompatActivity {
             return;
         }
 
-// 선택된 카테고리를 기반으로 질문 로드
-        loadQuestionsFromJson(selectedCategory);
-
-
-        // Load questions based on the selected category
+        // 선택된 카테고리를 기반으로 질문 로드
         loadQuestionsFromJson(selectedCategory);
         displayQuestion(currentQuestionIndex);
 
@@ -184,5 +200,48 @@ public class QuestionActivity extends AppCompatActivity {
 
         startActivity(resultIntent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu); // Replace with your menu file name
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // Call the back button behavior
+            return true;
+        } else if (item.getItemId() == R.id.action_home) {
+            // 홈 버튼 클릭 시 홈으로 이동
+            navigateToHome();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void navigateToHome() {
+        Intent homeIntent = new Intent(this, HomeActivity.class); // HomeMenuActivity로 변경 필요
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(homeIntent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        showExitConfirmationDialog();
+    }
+
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit Questions?");
+        builder.setMessage("Do you want to exit the question screen? Unsaved progress will be lost.");
+
+        builder.setPositiveButton("Yes", (dialog, which) -> finish());
+        builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+
+        builder.create().show();
     }
 }
