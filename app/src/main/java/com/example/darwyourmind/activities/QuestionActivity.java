@@ -198,9 +198,16 @@ public class QuestionActivity extends BaseActivity {
             resultIntent.putExtra("drawingPath", drawingPath); // Include the drawing path
         }
 
+        // Pass the test title to ResultActivity
+        String testTitle = getIntent().getStringExtra("testTitle");
+        if (testTitle != null) {
+            resultIntent.putExtra("testTitle", testTitle); // Include the test title
+        }
+
         startActivity(resultIntent);
         finish();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -166,9 +166,10 @@ public class TestActivity extends BaseActivity  {
         builder.create().show(); // 팝업창 표시
     }
 
-    // Method to save the drawing to a file
     private String saveDrawingToFile() {
-        File drawingFile = new File(getCacheDir(), "drawing.png");
+        String uniqueFileName = "drawing_" + System.currentTimeMillis() + ".png"; // Unique file name
+        File drawingFile = new File(getCacheDir(), uniqueFileName);
+
         try (FileOutputStream out = new FileOutputStream(drawingFile)) {
             Bitmap bitmap = drawingView.getBitmap();  // Assuming DrawingView has a method to get the bitmap
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
@@ -178,6 +179,7 @@ public class TestActivity extends BaseActivity  {
             return null;
         }
     }
+
 
     private String loadQuestionsFromJson(String categoryName) {
         String drawingPrompt = "";

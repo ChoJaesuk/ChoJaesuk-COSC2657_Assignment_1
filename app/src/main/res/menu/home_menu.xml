@@ -13,4 +13,10 @@
         android:icon="@drawable/ic_help"
         android:title="Help"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_history"
+        android:title="History"
+        android:icon="@drawable/ic_history"
+        app:showAsAction="ifRoom" />
 </menu>

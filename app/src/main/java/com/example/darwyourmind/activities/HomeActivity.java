@@ -60,6 +60,9 @@ public class HomeActivity extends AppCompatActivity {
         } else if (id == R.id.action_help) {
             openHelp();
             return true;
+        } else if (id == R.id.action_history) { // History 버튼 처리
+            openHistory();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -72,6 +75,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void openHelp() {
         Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+    }
+
+    private void openHistory() {
+        Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 

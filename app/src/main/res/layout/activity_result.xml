@@ -7,10 +7,9 @@
 
     <!-- Title TextView with prominent style -->
     <TextView
-        android:id="@+id/resultTitle"
+        android:id="@+id/testTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Results"
         android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="#333333"
@@ -31,7 +30,7 @@
         android:background="@drawable/border_imageview_background"
         android:scaleType="fitCenter"
         android:contentDescription="User Drawing"
-        app:layout_constraintTop_toBottomOf="@id/resultTitle"
+        app:layout_constraintTop_toBottomOf="@id/testTitleTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -44,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@id/drawingImageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/saveButton">
 
         <LinearLayout
             android:id="@+id/resultContainer"
@@ -53,4 +52,17 @@
             android:orientation="vertical"
             android:padding="8dp" />
     </ScrollView>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save Result"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/primary_text"
+        android:textColor="@android:color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
