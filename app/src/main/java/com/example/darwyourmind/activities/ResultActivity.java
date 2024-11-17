@@ -1,10 +1,15 @@
 package com.example.darwyourmind.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,10 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
 import com.example.darwyourmind.R;
 import com.example.darwyourmind.adapters.TestHistoryManager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class ResultActivity extends BaseActivity {
@@ -23,6 +31,7 @@ public class ResultActivity extends BaseActivity {
     private ImageView drawingImageView;
     private LinearLayout resultContainer;
     private Button saveButton; // Save Button for saving results
+    private Button shareButton; // Share Button for sharing results
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,7 @@ public class ResultActivity extends BaseActivity {
         drawingImageView = findViewById(R.id.drawingImageView);
         resultContainer = findViewById(R.id.resultContainer);
         saveButton = findViewById(R.id.saveButton); // Initialize Save Button
+        shareButton = findViewById(R.id.shareButton); // Initialize Share Button
 
         // Set title for the ActionBar
         setTitle("Result");
@@ -79,6 +89,21 @@ public class ResultActivity extends BaseActivity {
             TestHistoryManager historyManager = new TestHistoryManager(this);
             historyManager.saveTestResult(testTitle, uniqueDrawingPath, resultList);
             Toast.makeText(this, "Test result saved successfully!", Toast.LENGTH_SHORT).show();
+        });
+
+        // Share Button functionality
+        shareButton.setOnClickListener(v -> {
+            try {
+                File sharedImage = createShareableImage();
+                if (sharedImage != null) {
+                    shareResult(sharedImage);
+                } else {
+                    Toast.makeText(this, "Error preparing result for sharing!", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Log.e("ResultActivity", "Error sharing result", e);
+                Toast.makeText(this, "Error occurred while sharing!", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -157,5 +182,42 @@ public class ResultActivity extends BaseActivity {
             Log.e("ResultActivity", "Error saving unique drawing", e);
             return null;
         }
+    }
+    /**
+     * Converts the entire result view into a shareable image file.
+     */
+    private File createShareableImage() {
+        try {
+            // Prepare a bitmap for the entire result layout
+            View view = findViewById(R.id.resultContainer); // Entire result view
+            Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+
+            // Save bitmap to a file
+            File sharedDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "shared_results");
+            if (!sharedDir.exists()) sharedDir.mkdirs();
+
+            File sharedFile = new File(sharedDir, "result_" + System.currentTimeMillis() + ".png");
+            FileOutputStream outputStream = new FileOutputStream(sharedFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.close();
+            return sharedFile;
+        } catch (Exception e) {
+            Log.e("ResultActivity", "Error creating shareable image", e);
+            return null;
+        }
+    }
+
+    /**
+     * Shares the generated image file via an Intent.
+     */
+    private void shareResult(File file) {
+        Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out my test result from DrawYourMind!");
+        startActivity(Intent.createChooser(shareIntent, "Share your result via"));
     }
 }
