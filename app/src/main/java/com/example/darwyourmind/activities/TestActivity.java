@@ -106,7 +106,7 @@ public class TestActivity extends BaseActivity  {
             // 확인 팝업 표시
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Submit Drawing?");
-            builder.setMessage("정말 그림을 제출하고 싶으신가요? 그림은 다시 수정할 수 없습니다.");
+            builder.setMessage("Are you sure you want to submit the drawing?");
 
             builder.setPositiveButton("Yes", (dialog, which) -> {
                 Log.d("TestActivity", "Submit button clicked");
@@ -153,7 +153,7 @@ public class TestActivity extends BaseActivity  {
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit Drawing?");
-        builder.setMessage("테스트를 종료하시겠습니까? 그림은 저장되지 않습니다.");
+        builder.setMessage("Do you want to exit the test? The drawing will not be saved.");
 
         builder.setPositiveButton("Yes", (dialog, which) -> {
             finish(); // Activity 종료
