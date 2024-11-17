@@ -1,10 +1,254 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HelpActivity">
+    android:background="@color/background_light"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/helpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to Use the App"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/primary_text"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Each Step as a Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp">
+
+            <!-- Step Icon and Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_start_test"
+                    android:contentDescription="Step Icon"
+                    android:layout_marginEnd="12dp"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/startingTestTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. Starting a Test"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+            <!-- Step Description -->
+            <TextView
+                android:id="@+id/startingTestDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Navigate to the home screen and select a category to start a test. Follow the instructions provided."
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/secondary_text"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Drawing Step -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_drawing"
+                    android:contentDescription="Drawing Icon"
+                    android:layout_marginEnd="12dp"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/drawingTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2. Drawing"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/drawingDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Use the drawing tools at the bottom of the screen to draw based on the given prompt. You can clear your drawing or use the eraser tool if needed."
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/secondary_text"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Answering Questions -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_questions"
+                    android:contentDescription="Questions Icon"
+                    android:layout_marginEnd="12dp"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/answeringQuestionsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. Answering Questions"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/answeringQuestionsDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="After drawing, answer the multiple-choice questions that follow. Select an option and submit your answer."
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/secondary_text"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Viewing Results -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_results"
+                    android:contentDescription="Results Icon"
+                    android:layout_marginEnd="12dp"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/viewingResultsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4. Viewing Results"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/viewingResultsDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Once the test is complete, you can view your drawing, answers, and explanations on the result screen."
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/secondary_text"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Step 5: Viewing History -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_history_instruction"
+                    android:contentDescription="History Icon"
+                    android:layout_marginEnd="12dp"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/historyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5. Viewing History"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/historyDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Access your saved test results by navigating to the History section from the menu. Review your drawings, answers, and explanations."
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/secondary_text"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
